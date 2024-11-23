@@ -2,7 +2,7 @@
 #include <time.h>
 #include <string.h>
 
-// Structure to represent the electricity bill
+
 struct ElectricityBill {
     char houseName[50];
     int customerID;
@@ -16,7 +16,7 @@ struct ElectricityBill {
     float grandTotal;
 };
 
-// Function to calculate the electricity bill
+
 void calculateBill(struct ElectricityBill* bill, int billReadingDay, int billReadingMonth, int billReadingYear) {
     bill->totalAmount = 0;
     bill->rebateDays = 0;
@@ -24,7 +24,7 @@ void calculateBill(struct ElectricityBill* bill, int billReadingDay, int billRea
     bill->fineDays = 0;
     bill->fineAmount = 0;
 
-    // Calculate total amount based on units consumed
+    
     if (bill->unitsConsumed >= 0 && bill->unitsConsumed <= 20) {
         bill->totalAmount = bill->unitsConsumed * 4.0;
     } else if (bill->unitsConsumed > 20 && bill->unitsConsumed <= 50) {
@@ -37,15 +37,15 @@ void calculateBill(struct ElectricityBill* bill, int billReadingDay, int billRea
         bill->totalAmount = bill->unitsConsumed * 11.00;
     }
 
-    // Get current date (date of program execution)
+    
     time_t now;
     time(&now);
     struct tm* paymentDate = localtime(&now);
     int todayDay = paymentDate->tm_mday;
-    int todayMonth = paymentDate->tm_mon + 1; // tm_mon is 0-indexed
-    int todayYear = paymentDate->tm_year + 1900; // tm_year is years since 1900
+    int todayMonth = paymentDate->tm_mon + 1;
+    int todayYear = paymentDate->tm_year + 1900; 
 
-    // Calculate rebate days from the date of bill reading
+    
     int daysFromReadingDate = (todayYear - billReadingYear) * 365 +
                              (todayMonth - billReadingMonth) * 30 +
                              (todayDay - billReadingDay);
@@ -72,10 +72,10 @@ void calculateBill(struct ElectricityBill* bill, int billReadingDay, int billRea
 }
 
 int main() {
-    // Array of structures to store customer information
+    
     struct ElectricityBill customers[48];
 
-    // Read customer IDs and names from the text file
+    
     FILE* file = fopen("customer_data.txt", "r");
     if (file == NULL) {
         printf("Error opening file!\n");
@@ -98,14 +98,14 @@ int main() {
 
     fclose(file);
 
-    // Get customer information
+   
     int inputID;
     int customerIndex = -1;
     while (customerIndex == -1) {
         printf("Enter the Customer ID: ");
         scanf("%d", &inputID);
 
-        // Search for the customer ID in the database
+        
         for (int i = 0; i < numCustomers; i++) {
             if (inputID == customers[i].customerID) {
                 customerIndex = i;
@@ -118,7 +118,7 @@ int main() {
         }
     }
 
-    // Assign customer details from the database
+   
     struct ElectricityBill* bill = &customers[customerIndex];
 
     printf("Enter the units consumed: ");
